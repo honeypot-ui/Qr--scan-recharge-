@@ -22,6 +22,7 @@ class _SelectAwehState extends State<SelectAweh> {
   ];
 
   int selectedAweh = -1;
+  double amount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +55,37 @@ class _SelectAwehState extends State<SelectAweh> {
           return <Widget>[
             SliverToBoxAdapter(
               child: Center(
-                child: Text(
-                  "Select Aweh",
-                  style: TextStyle(
-                    fontSize: 35,
-                    color: Colors.grey.shade100,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Select Aweh",
+                      style: TextStyle(
+                        fontSize: 35,
+                        color: Colors.grey.shade100,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: "Balance: $amount\n",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey.shade100,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        // children: [
+                        //   TextSpan(
+                        //     text: "Free Minutes: \n",
+                        //   ),
+                        //   TextSpan(
+                        //     text: "Free SMS: ",
+                        //   ),
+                        // ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
