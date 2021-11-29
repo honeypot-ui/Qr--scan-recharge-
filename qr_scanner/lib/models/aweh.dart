@@ -4,3 +4,9 @@ class Aweh {
 
   Aweh(this.name, this.imageURL);
 }
+
+class AwehScreens {
+  final String navigators;
+
+  AwehScreens(this.navigators);
+}
