@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_scanner/animation/FadeAnimation.dart';
 import 'package:qr_scanner/models/aweh.dart';
+import 'package:qr_scanner/models/constants.dart';
 import 'package:qr_scanner/screens/scanning.dart';
 
 class SelectAweh extends StatefulWidget {
@@ -14,11 +15,20 @@ class _SelectAwehState extends State<SelectAweh> {
 
   List<Aweh> aweh = [
     Aweh("Aweh O-Yeah", "assets/images/o_yeah.png"),
-    Aweh("Aweh Oka", "assets/images/go.png"),
+    Aweh("Aweh Oka", "assets/images/oka.png"),
     Aweh("Aweh Go", "assets/images/go.png"),
     Aweh("Aweh Prime", "assets/images/prime.png"),
-    Aweh("Aweh Gig", "assets/images/o_yeah.png"),
+    Aweh("Aweh Gig", "assets/images/gig.png"),
     Aweh("Aweh Super", "assets/images/super.png"),
+  ];
+
+  List<AwehScreens> navigators = [
+    AwehScreens('o_yeah'),
+    AwehScreens('oka'),
+    AwehScreens('go'),
+    AwehScreens('prime'),
+    AwehScreens('gig'),
+    AwehScreens('super')
   ];
 
   int selectedAweh = -1;
@@ -27,28 +37,13 @@ class _SelectAwehState extends State<SelectAweh> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset("assets/images/logo.png", height: 150,),
-        centerTitle: true,
-        backgroundColor: Color(0xff031737),
-      ),
-      backgroundColor: Color(0xff0B0A0F),
+      appBar: MyAppBar.my_appbar,
+      backgroundColor: MyColors.bg_color,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Color(0xff031737),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Scanning(),
-            ),
-          );
-        },
-        label: Text(
-          'Scan QR',
-          style: TextStyle(fontSize: 20),
-        ),
-        icon: const Icon(Icons.zoom_in),
+      floatingActionButton: ExtendedButton(
+        navigator_url: 'qr_scan',
+        button_text: 'Scan QR',
+        my_icon: Icon(Icons.camera_alt_rounded),
       ),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
@@ -61,7 +56,7 @@ class _SelectAwehState extends State<SelectAweh> {
                       "Select Aweh",
                       style: TextStyle(
                         fontSize: 35,
-                        color: Colors.grey.shade100,
+                        color: MyColors.card_colors,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -69,10 +64,10 @@ class _SelectAwehState extends State<SelectAweh> {
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: "Balance: $amount\n",
+                        text: "Balance: ${MyItems.balance}",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.grey.shade100,
+                          color: MyColors.card_colors,
                           fontWeight: FontWeight.w400,
                         ),
                         // children: [
@@ -123,12 +118,16 @@ class _SelectAwehState extends State<SelectAweh> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          if (selectedAweh == index){
-            selectedAweh = -1;
-          }
-          else {
-            selectedAweh = index;
-          }
+          selectedAweh = index;
+          Navigator.pushNamed(context, '/${navigators[index].navigators}');
+          // if (selectedAweh == index){
+          //   // selectedAweh = -1;
+          //   selectedAweh = index;
+          //   Navigator.pushNamed(context, '/${navigators[index].navigators}');
+          // }
+          // else {
+          //   selectedAweh = index;
+          // }
         });
       },
       child: AnimatedContainer(
@@ -152,7 +151,7 @@ class _SelectAwehState extends State<SelectAweh> {
               child: Text(
                 name,
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
+              ),
             ),
           ],
         ),
